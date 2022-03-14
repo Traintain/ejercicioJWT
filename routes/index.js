@@ -1,8 +1,8 @@
-var express = require("express");
-var router = express.Router();
+let express = require("express");
+let router = express.Router();
 
-var HandlerGenerator = require("../handlegenerator.js");
-var middleware = require("../middleware.js");
+let HandlerGenerator = require("../handlegenerator.js");
+let middleware = require("../middleware.js");
 
 HandlerGenerator = new HandlerGenerator();
 
