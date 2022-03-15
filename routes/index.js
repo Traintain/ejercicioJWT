@@ -3,7 +3,6 @@ let router = express.Router();
 
 let HandlerGenerator = require("../handlegenerator.js");
 let middleware = require("../middleware.js");
-var [getUsuarios] = require("../controllers/users.js");
 
 HandlerGenerator = new HandlerGenerator();
 

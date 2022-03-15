@@ -1,5 +1,6 @@
 let jwt = require("jsonwebtoken");
 let config = require("./config");
+let [getUsuarios, getUsuario] = require("./controllers/users.js");
 
 // Clase encargada de la creación del token
 class HandlerGenerator {
@@ -9,8 +10,24 @@ class HandlerGenerator {
     let password = req.body.password;
 
     // Este usuario y contraseña, en un ambiente real, deben ser traidos de la BD
-    let mockedUsername = "admin";
-    let mockedPassword = "password";
+    //let usuario = getUsuario(username);
+    let usuario = () => {
+      return new Promise((resolve, reject) => {
+        resolve(getUsuario);
+      });
+    };
+
+    //getUsuario(username).then((res) => {
+    //  usuario = res;
+    //  console.log(usuario);
+
+    //  let mockedUsername = usuario.username;
+    //  let mockedPassword = usuario.password;
+    //});
+
+    console.log(usuario);
+    let mockedUsername = usuario.username;
+    let mockedPassword = usuario.password;
 
     // Si se especifico un usuario y contraseña, proceda con la validación
     // de lo contrario, un mensaje de error es retornado
@@ -31,7 +48,7 @@ class HandlerGenerator {
         });
       } else {
         // El error 403 corresponde a Forbidden (Prohibido) de acuerdo al estándar HTTP
-        res.send(403).json({
+        res.sendStatus(403).json({
           success: false,
           message: "Incorrect username or password",
         });
