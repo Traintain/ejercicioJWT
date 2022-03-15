@@ -1,28 +1,19 @@
 const { MongoClient } = require("mongodb");
-const connectionString = "mongodb+srv://AdminMongo:PasswordMongo@cluster0.pykpw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri =
+  "mongodb+srv://AdminMongo:PasswordMongo@cluster0.pykpw.mongodb.net/mydb?retryWrites=true&w=majority";
 
-const client = new MongoClient(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+function MongoUtils() {
+  const mu = {};
 
-let dbConnection;
-
-module.exports = {
-  connectToServer: function (callback) {
-    client.connect(function (err, db) {
-      if (err || !db) {
-        return callback(err);
-      }
-
-      dbConnection = db.db("sample_airbnb");
-      console.log("Successfully connected to MongoDB.");
-
-      return callback();
+  // Esta función retorna una nueva conexión a MongoDB.
+  // Tenga presente que es una promesa que deberá ser resuelta.
+  mu.conn = () => {
+    const client = new MongoClient(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
-  },
-
-  getDb: function () {
-    return dbConnection;
-  },
-};
+    return client.connect();
+  };
+  return mu;
+}
+module.exports = MongoUtils();
